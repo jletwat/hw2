@@ -76,13 +76,82 @@
 # Delete existing data, so you'll start fresh each time this script is run.
 # Use `Model.destroy_all` code.
 # TODO!
+Studio.destroy_all
+Movie.destroy_all
+Actor.destroy_all
+Role.destroy_all
 
 # Generate models and tables, according to the domain model.
 # TODO!
+rails generate model Studio name:string
+rails generate model Movie title:string year:integer rating:string studio:references
+rails generate model Actor name:string
+rails generate model Role movie:references actor:references character:string
+rails db:migrate
+
+
 
 # Insert data into the database that reflects the sample data shown above.
 # Do not use hard-coded foreign key IDs.
 # TODO!
+warner = Studio.new
+warner["name"] = "Warner Bros."
+warner.save
+
+batman_begins = Movie.new
+batman_begins["name"] = "Batman Begins"
+batman_begins["year"] = "2005"
+batman_begins["rating"] = "PG-13"
+batman_begins["studio"] = warner
+batman_begins.save
+
+dark_knight = Movie.new
+dark_knight["name"] = "The Dark Knight"
+dark_knight["year"] = "2008"
+dark_knight["rating"] = "PG-13"
+dark_knight["studio"] = warner
+dark_knight.save
+
+rises = Movie.new
+rises["name"] = "The Dark Knight Rises"
+rises["year"] = "2012"
+rises["rating"] = "PG-13"
+rises["studio"] = warner
+rises.save
+
+bale = Actor.new
+bale["name"] = "Christian Bale"
+
+caine = Actor.new
+caine["name"] = "Michael Caine"
+
+neeson = Actor.new
+neeson["name"] = "Liam Neeson"
+
+holmes = Actor.new
+holmes["name"] = "Katie Holmes"
+
+oldman = Actor.new
+oldman["name"] = "Gary Oldman"
+
+ledger = Actor.new
+ledger["name"] = "Heath Ledger"
+
+eckhart = Actor.new
+eckhart["name"] = "Aaron Eckhart"
+
+gyllenhaal = Actor.new
+gyllenhaal["name"] = "Maggie Gyllenhaal"
+
+hardy = Actor.new
+hardy["name"] = "Tom Hardy"
+
+levitt = Actor.new
+levitt["name"] = "Joseph Gordon-Levitt"
+
+hathaway = Actor.new
+hathaway["name"] = "Anne Hathaway"
+
 
 # Prints a header for the movies output
 puts "Movies"
