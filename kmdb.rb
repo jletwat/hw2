@@ -76,18 +76,20 @@
 # Delete existing data, so you'll start fresh each time this script is run.
 # Use `Model.destroy_all` code.
 # TODO!
-Studio.destroy_all
+Role.destroy_all
 Movie.destroy_all
 Actor.destroy_all
-Role.destroy_all
+Studio.destroy_all
 
 # Generate models and tables, according to the domain model.
 # TODO!
-rails generate model Studio name:string
-rails generate model Movie title:string year:integer rating:string studio:references
-rails generate model Actor name:string
-rails generate model Role movie:references actor:references character:string
-rails db:migrate
+
+# I can the below in my terminal to generatel the models and tables
+# rails generate model Studio name:string
+# rails generate model Movie title:string year_released:integer rating:string studio:references
+# rails generate model Actor name:string
+# rails generate model Role movie:references actor:references character:string
+# rails db:migrate
 
 
 
@@ -98,60 +100,63 @@ warner = Studio.new
 warner["name"] = "Warner Bros."
 warner.save
 
-batman_begins = Movie.new
-batman_begins["name"] = "Batman Begins"
-batman_begins["year"] = "2005"
-batman_begins["rating"] = "PG-13"
-batman_begins["studio"] = warner
-batman_begins.save
-
-dark_knight = Movie.new
-dark_knight["name"] = "The Dark Knight"
-dark_knight["year"] = "2008"
-dark_knight["rating"] = "PG-13"
-dark_knight["studio"] = warner
+begins = Movie.create(title: "Batman Begins", year_released: 2005, rating: "PG-13", studio: warner)
+begins.save
+dark_knight = Movie.create(title: "The Dark Knight", year_released: 2008, rating: "PG-13", studio: warner)
 dark_knight.save
-
-rises = Movie.new
-rises["name"] = "The Dark Knight Rises"
-rises["year"] = "2012"
-rises["rating"] = "PG-13"
-rises["studio"] = warner
+rises = Movie.create(title: "The Dark Knight Rises", year_released: 2012, rating: "PG-13", studio: warner)
 rises.save
 
-bale = Actor.new
-bale["name"] = "Christian Bale"
+bale = Actor.create(name: "Christian Bale")
+bale.save
 
-caine = Actor.new
-caine["name"] = "Michael Caine"
+caine = Actor.create(name: "Michael Caine")
+caine.save
 
-neeson = Actor.new
-neeson["name"] = "Liam Neeson"
+neeson = Actor.create(name: "Liam Neeson")
+neeson.save
 
-holmes = Actor.new
-holmes["name"] = "Katie Holmes"
+holmes = Actor.create(name: "Katie Holmes")
+holmes.save
 
-oldman = Actor.new
-oldman["name"] = "Gary Oldman"
+oldman = Actor.create(name: "Gary Oldman")
+oldman.save
 
-ledger = Actor.new
-ledger["name"] = "Heath Ledger"
+ledger = Actor.create(name: "Heath Ledger")
+ledger.save
 
-eckhart = Actor.new
-eckhart["name"] = "Aaron Eckhart"
+eckhart = Actor.create(name: "Aaron Eckhart")
+eckhart.save
 
-gyllenhaal = Actor.new
-gyllenhaal["name"] = "Maggie Gyllenhaal"
+gyllenhaal = Actor.create(name: "Maggie Gyllenhaal")
+gyllenhaal.save
 
-hardy = Actor.new
-hardy["name"] = "Tom Hardy"
+hardy = Actor.create(name: "Tom Hardy")
+hardy.save
 
-levitt = Actor.new
-levitt["name"] = "Joseph Gordon-Levitt"
+levitt = Actor.create(name: "Joseph Gordon-Levitt")
+levitt.save
 
-hathaway = Actor.new
-hathaway["name"] = "Anne Hathaway"
+hathaway = Actor.create(name: "Anne Hathaway")
+hathaway.save
 
+Role.create(movie: begins, actor: bale, character: "Bruce Wayne")
+Role.create(movie: begins, actor: caine, character: "Alfred")
+Role.create(movie: begins, actor: neeson, character: "Ra's Al Ghul")
+Role.create(movie: begins, actor: holmes, character: "Rachel Dawes")
+Role.create(movie: begins, actor: oldman, character: "Commissioner Gordon")
+
+Role.create(movie: dark_knight, actor: bale, character: "Bruce Wayne")
+Role.create(movie: dark_knight, actor: ledger, character: "Joker")
+Role.create(movie: dark_knight, actor: eckhart, character: "Harvey Dent")
+Role.create(movie: dark_knight, actor: caine, character: "Alfred")
+Role.create(movie: dark_knight, actor: gyllenhaal, character: "Rachel Dawes")
+
+Role.create(movie: rises, actor: bale, character: "Bruce Wayne")
+Role.create(movie: rises, actor: oldman, character: "Commissioner Gordon")
+Role.create(movie: rises, actor: hardy, character: "Bane")
+Role.create(movie: rises, actor: levitt, character: "John Blake")
+Role.create(movie: rises, actor: hathaway, character: "Selina Kyle")
 
 # Prints a header for the movies output
 puts "Movies"
@@ -160,6 +165,9 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+Movie.all.each do |movie|
+    puts "#{movie.title.ljust(22)} #{movie.year_released}  #{movie.rating.ljust(4)}  #{movie.studio.name}"
+  end
 
 # Prints a header for the cast output
 puts ""
@@ -169,3 +177,7 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+
+Role.all.each do |role|
+    puts "#{role.movie.title.ljust(22)} #{role.actor.name.ljust(20)} #{role.character.ljust(15)}"
+  end
